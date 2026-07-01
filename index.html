@@ -1,69 +1,193 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tutorial e contato Brasilata">
-    <title>Brasilata | Tutorial</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portal interno de tutoriais Brasilata." />
 
-    <link rel="stylesheet" href="style.css">
+    <title>Brasilata | Portal de Tutoriais</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="config.js"></script>
+    <script src="tutorials.js"></script>
+    <script src="suppliersResponsible.js"></script>
+    <script src="script.js" defer></script>
 </head>
+
 <body>
+    <header class="app-header">
+        <div class="container header-content">
+            <div>
+                <p class="eyebrow">Brasilata</p>
+                <h1>Portal de Tutoriais</h1>
+                <p class="header-description">
+                    Acesse vídeos e orientações internas de forma rápida e organizada.
+                </p>
+            </div>
 
-    <header class="hero">
-        <div class="container fade-in">
+            <div id="userArea" class="user-area hidden">
+                <span id="userName" class="user-name"></span>
 
-            <h1 class="hero-title">
-                Tutorial de Medição de Contratos
-            </h1>
-
-            <p class="hero-subtitle">
-                Assista ao vídeo abaixo para obter orientações rápidas e entre em contato caso precise de ajuda.
-            </p>
-
+                <button id="logoutButton" class="button button-outline" type="button">
+                    Sair
+                </button>
+            </div>
         </div>
     </header>
 
     <main>
+        <section id="loginSection" class="login-section">
+            <div class="container">
+                <div class="login-card fade-in">
+                    <div class="login-icon" aria-hidden="true">🔐</div>
 
-        <section class="video-section">
-            <div class="container fade-in">
+                    <h2>Acesso restrito</h2>
 
-                <p class="video-description">
-                    Confira o tutorial completo antes de entrar em contato.
-                </p>
+                    <p>
+                        Informe seu e-mail corporativo e o código de acesso interno.
+                        Apenas e-mails terminados em
+                        <strong>@brasilata.com.br</strong>
+                        serão aceitos.
+                    </p>
 
-                <div class="video-wrapper">
+                    <form id="accessForm" class="access-form">
+                        <div class="form-group">
+                            <label for="emailInput">E-mail corporativo</label>
+                            <input
+                                id="emailInput"
+                                type="email"
+                                placeholder="nome.sobrenome@brasilata.com.br"
+                                autocomplete="email"
+                                required
+                            />
+                        </div>
 
-                    <iframe
-                        src="https://www.youtube.com/embed/0NcDCADlCCE"
-                        title="Vídeo Tutorial"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
+                        <div class="form-group">
+                            <label for="accessCodeInput">Código de acesso</label>
+                            <input
+                                id="accessCodeInput"
+                                type="password"
+                                placeholder="Digite o código interno"
+                                autocomplete="off"
+                                required
+                            />
+                        </div>
 
+                        <button class="button button-primary" type="submit">
+                            Entrar no portal
+                        </button>
+                    </form>
+
+                    <p id="loginMessage" class="message" role="status" aria-live="polite"></p>
+
+                    <p class="security-note">
+                        Esta página não usa login Microsoft. O acesso é validado localmente
+                        no navegador.
+                    </p>
                 </div>
+            </div>
+        </section>
 
-                <div class="contact-area">
-                    <h1>Ficou com dúvida?</h1>
+        <section id="appSection" class="portal-section hidden">
+            <div class="container">
+                <div class="portal-intro fade-in">
+                    <div>
+                        <p class="eyebrow">Área de tutoriais</p>
+                        <h2>Biblioteca de Tutoriais</h2>
+                        <p>
+                            Pesquise pelo tutorial desejado e assista ao vídeo diretamente nesta página.
+                        </p>
+                    </div>
+
                     <a
                         href="https://teams.microsoft.com/l/chat/0/0?users=lucas.melo@brasilata.com.br"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="teams-button"
-                        aria-label="Entrar em contato pelo Microsoft Teams">
-
-                        Entrar em contato pelo Microsoft Teams
-
+                        class="button button-teams"
+                        aria-label="Entrar em contato pelo Microsoft Teams"
+                    >
+                        Dúvida? Clique aqui
                     </a>
                 </div>
 
+                <div class="search-area fade-in">
+                    <label for="searchInput">Pesquisar tutorial</label>
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="Digite título, categoria ou palavra-chave..."
+                        autocomplete="off"
+                    />
+                </div>
+
+                <section class="supplier-section fade-in" aria-labelledby="supplierTitle">
+                    <div class="supplier-header">
+                        <div>
+                            <p class="eyebrow supplier-eyebrow">Contratos</p>
+                            <h2 id="supplierTitle">Responsáveis por Fornecedor</h2>
+                            <p>
+                                Consulte qual usuário é responsável por cada fornecedor cadastrado.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="supplier-search-area">
+                        <label for="supplierSearchInput">Pesquisar fornecedor</label>
+                        <input
+                            id="supplierSearchInput"
+                            type="search"
+                            placeholder="Digite o nome do fornecedor..."
+                            autocomplete="off"
+                        />
+                    </div>
+
+                    <div id="supplierList" class="supplier-list"></div>
+
+                    <p id="supplierEmptyState" class="empty-state hidden">
+                        Nenhum fornecedor encontrado para sua pesquisa.
+                    </p>
+                </section>
+
+                <div class="content-grid">
+                    <section class="tutorial-list-section fade-in">
+                        <h2 class="section-title">Tutoriais disponíveis</h2>
+
+                        <div id="tutorialList" class="tutorial-list"></div>
+
+                        <p id="emptyState" class="empty-state hidden">
+                            Nenhum tutorial encontrado para sua pesquisa.
+                        </p>
+                    </section>
+
+                    <aside class="video-panel fade-in">
+                        <div id="videoPlaceholder" class="video-placeholder">
+                            <div>
+                                <span aria-hidden="true">▶</span>
+                                <p>Selecione um tutorial para assistir.</p>
+                            </div>
+                        </div>
+
+                        <div id="selectedTutorial" class="selected-tutorial hidden">
+                            <h2 id="selectedTutorialTitle"></h2>
+                            <p id="selectedTutorialDescription"></p>
+
+                            <div class="video-wrapper">
+                                <iframe
+                                    id="tutorialIframe"
+                                    src=""
+                                    title="Vídeo tutorial"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </div>
         </section>
-
     </main>
-
-    <script src="script.js"></script>
-
 </body>
+
 </html>
